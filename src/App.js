@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { TaskRow } from "./components/TaskRow";
 
 function App() {
   const [userName, setUserName] = useState("JFZuniga");
@@ -9,13 +10,15 @@ function App() {
     { name: "Task four", done: false },
   ]);
 
-  const taskTableRows = () => {
-    return taskItems.map((task) => (
-      <tr key={task.name}>
-        <td>{task.name}</td>
-      </tr>
+  const toggleTask = (task) =>
+    setTaskItems(
+      taskItems.map((t) => (t.name === task.name ? { ...t, done: !t.done } : t))
+    );
+
+  const taskTableRows = () =>
+    taskItems.map((task) => (
+      <TaskRow task={task} key={task.name} toggleTask={toggleTask} />
     ));
-  };
 
   return (
     <div>
